@@ -1,17 +1,17 @@
-﻿// main.cpp
-#include <iostream>
-#include "Helpers.h"
+﻿#include <iostream>
+#include <string>
 
 int main() {
-    int num1 = 5;
-    int num2 = 3;
-
-    // Вызов функции из Helpers.h
-    int result = squareOfSum(num1, num2);
-
-    std::cout << "Numm 1: " << num1 << std::endl;
-    std::cout << "Numm 2: " << num2 << std::endl;
-    std::cout << "Summ**2: " << result << std::endl;
-
+    std::string myString = "Hello, World!";
+    std::cout << "Str: " << myString << std::endl;
+    std::cout << "Len str: " << myString.length() << " symb" << std::endl;
+    
+    if (!myString.empty()) {
+        std::cout << "First: " << myString[0] << std::endl;
+        std::cout << "Last: " << myString[myString.length() - 1] << std::endl;
+    } else {
+        std::cout << "Is empty" << std::endl;
+    }
+    
     return 0;
 }
