@@ -1,17 +1,21 @@
 ﻿#include <iostream>
 #include <string>
 
-int main() {
-    std::string myString = "";
-    std::cout << "Str: " << myString << std::endl;
-    std::cout << "Len str: " << myString.length() << " symb" << std::endl;
-    
-    if (!myString.empty()) {
-        std::cout << "First: " << myString.front() << std::endl;
-        std::cout << "Last: " << myString.back() << std::endl;
-    } else {
-        std::cout << "Is empty" << std::endl;
+void PrintEvenOrOddNumbers(int maxNumber, bool IsOdd) {
+    std::cout << "Numbers from 0 to " << maxNumber;
+    std::cout << (IsOdd ? " (Even): " : " (Odd): ");
+
+    for (int i = (IsOdd ? 0 : 1); i <= maxNumber; i += 2) {
+        std::cout << i << " ";
     }
+    std::cout << std::endl;
+}
+
+int main() {
+    const int N = 20;
+
+    PrintEvenOrOddNumbers(N, true);
+    PrintEvenOrOddNumbers(N, false);
     
     return 0;
 }
