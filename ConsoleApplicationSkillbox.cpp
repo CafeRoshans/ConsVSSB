@@ -1,91 +1,81 @@
 ﻿#include <iostream>
-#include <cstring>
 
-class Player {
-private:
-    char* name;
-    int score;
-
+class Animal {
 public:
-    Player() : name(nullptr), score(0) {}
-
-    Player(const char* playerName, int playerScore) : score(playerScore) {
-        name = new char[strlen(playerName) + 1];
-        strcpy_s(name, strlen(playerName) + 1, playerName);
+    virtual void Voice() {
+        std::cout << "Some sound" << std::endl;
     }
+};
 
-    ~Player() {
-        delete[] name;
+class Dog : public Animal {
+public:
+    void Voice() override {
+        std::cout << "Woof! Woof!" << std::endl;
     }
+};
 
-    const char* getName() const { return name; }
-    int getScore() const { return score; }
-
-    void setName(const char* playerName) {
-        delete[] name;
-        name = new char[strlen(playerName) + 1];
-        strcpy_s(name, strlen(playerName) + 1, playerName);
+class Cat : public Animal {
+public:
+    void Voice() override {
+        std::cout << "Meow! Meow!" << std::endl;
     }
+};
 
-    void setScore(int playerScore) { score = playerScore; }
+class Cow : public Animal {
+public:
+    void Voice() override {
+        std::cout << "Moo! Moo!" << std::endl;
+    }
+};
 
-    void copyFrom(const Player& other) {
-        delete[] name;
-        name = new char[strlen(other.name) + 1];
-        strcpy_s(name, strlen(other.name) + 1, other.name);
-        score = other.score;
+class Lion : public Animal {
+public:
+    void Voice() override {
+        std::cout << "Roar! Roar!" << std::endl;
     }
 };
 
 int main() {
-    int numPlayers;
+    const int arraySize = 6;
+    Animal* animals[arraySize];
 
-    std::cout << "Enter number of players: ";
-    std::cin >> numPlayers;
-    std::cin.ignore();
+    animals[0] = new Dog();
+    animals[1] = new Cat();
+    animals[2] = new Cow();
+    animals[3] = new Lion();
+    animals[4] = new Dog();
+    animals[5] = new Cat();
 
-    if (numPlayers <= 0) {
-        std::cout << "Number of players must be positive!" << std::endl;
-        return 1;
+    for (int i = 0; i < arraySize; ++i) {
+        std::cout << "Animal " << i + 1 << ": ";
+        animals[i]->Voice();
     }
 
-    Player* players = new Player[numPlayers];
-
-    for (int i = 0; i < numPlayers; i++) {
-        char buffer[100];
-        int score;
-
-        std::cout << "\nPlayer #" << i + 1 << std::endl;
-
-        std::cout << "Enter player name: ";
-        std::cin.getline(buffer, 100);
-
-        std::cout << "Enter score: ";
-        std::cin >> score;
-        std::cin.ignore();
-
-        players[i].setName(buffer);
-        players[i].setScore(score);
+    for (int i = 0; i < arraySize; ++i) {
+        delete animals[i];
     }
 
-    for (int i = 0; i < numPlayers - 1; i++) {
-        for (int j = 0; j < numPlayers - i - 1; j++) {
-            if (players[j].getScore() < players[j + 1].getScore()) {
-                Player temp;
-                temp.copyFrom(players[j]);
-                players[j].copyFrom(players[j + 1]);
-                players[j + 1].copyFrom(temp);
-            }
-        }
-    }
+    Animal* animalPtr;
 
-    std::cout << "\n=== RESULTS (sorted by score) ===" << std::endl;
-    for (int i = 0; i < numPlayers; i++) {
-        std::cout << i + 1 << ". " << players[i].getName()
-            << " - " << players[i].getScore() << " points" << std::endl;
-    }
+    animalPtr = new Dog();
+    std::cout << "Dog through Animal pointer: ";
+    animalPtr->Voice();
+    delete animalPtr;
 
-    delete[] players;
+    animalPtr = new Cat();
+    std::cout << "Cat through Animal pointer: ";
+    animalPtr->Voice();
+    delete animalPtr;
+
+    animalPtr = new Cow();
+    std::cout << "Cow through Animal pointer: ";
+    animalPtr->Voice();
+    delete animalPtr;
+
+    animalPtr = new Lion();
+    std::cout << "Lion through Animal pointer: ";
+    animalPtr->Voice();
+    delete animalPtr;
 
     return 0;
 }
